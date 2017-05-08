@@ -4,30 +4,41 @@ export default class CountdownComponent extends Component {
   @tracked countdownTime;
   @tracked countdownDays;
   @tracked countdownMonths;
-  @tracked theme;
+  @tracked theme = 'dark';
+  countdownDateTime: string
 
   constructor(options) {
     super(options);
-    this.loadTime();
-    this.theme = 'dark';
+    this._loadTime();
+    let date = new Date();
+    date.setDate(date.getDate() + 10);
+    let dateStr = date.toISOString().split('T')[0];
+    let time = '12:00:00';
+    if (this.args.countdownDate) {
+      dateStr = this.args.countdownDate;
+    }
+    if (this.args.countdownTime) {
+      time = this.args.countdownTime;
+    }
+    this.countdownDateTime = `${dateStr}T${time}`;
   }
 
-  loadTime() {
+  // Methods
+  _loadTime() {
     let now = +new Date();
-    let expireDate = +new Date('2017-12-31T23:59:59');
+    let expireDate = +new Date(this.countdownDateTime);
     let diffSeconds = (expireDate - now) / 1000
     let months = Math.floor((diffSeconds / 86400) / 30.4167);
     let monthsInSeconds = months * 2592000;
     let days = Math.floor((diffSeconds - monthsInSeconds) / 86400);
 
-    this.countdownTime = this.secondsToTime(diffSeconds);
+    this.countdownTime = this._secondsToTime(diffSeconds);
     this.countdownDays = days;
     this.countdownMonths = months;
-    setTimeout(() => this.loadTime(), 1000);
+    setTimeout(() => this._loadTime(), 1000);
   }
 
-  // Methods
-  secondsToTime(sec) {
+  _secondsToTime(sec) {
     let hours = Math.floor((sec % 86400) / 3600).toString();
     let minutes = Math.floor(((sec % 86400) % 3600) / 60).toString();
     let seconds = Math.floor(((sec % 86400) % 3600) % 60).toString();
@@ -40,15 +51,5 @@ export default class CountdownComponent extends Component {
       }
     }
     return time;
-  }
-
-  // actions
-  toggleTheme(e) {
-    e.preventDefault();
-    if (this.theme === 'dark') {
-      this.theme = 'light';
-    } else {
-      this.theme = 'dark';
-    }
   }
 };

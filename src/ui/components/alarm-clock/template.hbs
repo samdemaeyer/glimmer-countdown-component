@@ -2,12 +2,13 @@
   <div id="clock" class="{{theme}}">
     <div class="display">
       <div class="weekdays">
-        <span class="active">Months: {{countdownMonths}}</span>
-        <span class="active">Days: {{countdownDays}}</span>
+        {{#each weekdays key="@index" as |weekday|}}
+          <span class="{{weekday.cssClass}}">{{weekday.day}}</span>
+        {{/each}}
       </div>
       <div class="alarm"></div>
       <div class="digits">
-        {{#each countdownTime.hours key="@index" as |digit|}}
+        {{#each time.hours key="@index" as |digit|}}
           <div class="{{digit}}">
             <span class="d1"></span>
             <span class="d2"></span>
@@ -19,7 +20,7 @@
           </div>
         {{/each}}
         <div class="dots"></div>
-        {{#each countdownTime.minutes key="@index" as |digit|}}
+        {{#each time.minutes key="@index" as |digit|}}
           <div class="{{digit}}">
             <span class="d1"></span>
             <span class="d2"></span>
@@ -31,7 +32,7 @@
           </div>
         {{/each}}
         <div class="dots"></div>
-        {{#each countdownTime.seconds key="@index" as |digit|}}
+        {{#each time.seconds key="@index" as |digit|}}
           <div class="{{digit}}">
             <span class="d1"></span>
             <span class="d2"></span>
@@ -42,8 +43,11 @@
             <span class="d7"></span>
           </div>
         {{/each}}
+
       </div>
     </div>
   </div>
-  <alarm-clock @theme="light" />
+  <div class="button-holder">
+		<a href="#" class="button" onclick={{action toggleTheme}}>Switch Theme</a>
+	</div>
 </div>
