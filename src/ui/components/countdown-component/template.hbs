@@ -1,3 +1,52 @@
 <div>
-  <h1>Welcome to Glimmer!</h1>
+  <h2 class="title">This timer ends on 31 December 2017 at 23h59 (59ms)</h2>
+  <div id="clock" class="{{theme}}">
+    <div class="display">
+      <div class="weekdays">
+        <span class="active">Months: {{countdownMonths}}</span>
+        <span class="active">Days: {{countdownDays}}</span>
+      </div>
+      <div class="alarm"></div>
+      <div class="digits">
+        {{#each countdownTime.hours key="@index" as |digit|}}
+          <div class="{{digit}}">
+            <span class="d1"></span>
+            <span class="d2"></span>
+            <span class="d3"></span>
+            <span class="d4"></span>
+            <span class="d5"></span>
+            <span class="d6"></span>
+            <span class="d7"></span>
+          </div>
+        {{/each}}
+        <div class="dots"></div>
+        {{#each countdownTime.minutes key="@index" as |digit|}}
+          <div class="{{digit}}">
+            <span class="d1"></span>
+            <span class="d2"></span>
+            <span class="d3"></span>
+            <span class="d4"></span>
+            <span class="d5"></span>
+            <span class="d6"></span>
+            <span class="d7"></span>
+          </div>
+        {{/each}}
+        <div class="dots"></div>
+        {{#each countdownTime.seconds key="@index" as |digit|}}
+          <div class="{{digit}}">
+            <span class="d1"></span>
+            <span class="d2"></span>
+            <span class="d3"></span>
+            <span class="d4"></span>
+            <span class="d5"></span>
+            <span class="d6"></span>
+            <span class="d7"></span>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="button-holder">
+		<a href="#" class="button" onclick={{action toggleTheme}}>Switch Theme</a>
+	</div>
 </div>
